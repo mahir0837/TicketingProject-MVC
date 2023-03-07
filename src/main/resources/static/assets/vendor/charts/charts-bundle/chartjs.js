@@ -83,7 +83,7 @@
                         }]
                     },
                     options: {
-                        scales: {
+                        scales1: {
                             yAxes: [{
 
                             }]
