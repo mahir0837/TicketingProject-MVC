@@ -51,10 +51,18 @@ public class DataGenerator implements CommandLineRunner {
         UserDTO user8 = new UserDTO("Bill",
                 "Matt", "bill@cydeo.com", "Abc4", true, "8881239846", employeeRole, Gender.MALE);
 
-        List<UserDTO>userDTOList= Arrays.asList(user1,user2,user3,user4,user5,user6,user7,user8);
-        for (UserDTO userDTO : userDTOList) {
-            userService.save(userDTO);
-        }
+        userService.save(user1);
+        userService.save(user2);
+        userService.save(user3);
+        userService.save(user4);
+        userService.save(user5);
+        userService.save(user6);
+        userService.save(user7);
+        userService.save(user8);
+//        List<UserDTO>userDTOList= Arrays.asList(user1,user2,user3,user4,user5,user6,user7,user8);
+//        for (UserDTO user : userDTOList) {
+//            userService.save(user);
+//        }
 
 
     }
