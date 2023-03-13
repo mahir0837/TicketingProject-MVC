@@ -1,25 +1,28 @@
 package com.sarac.boostrap;
+import com.sarac.dto.ProjectDTO;
 import com.sarac.dto.RoleDTO;
 import com.sarac.dto.UserDTO;
 import com.sarac.enums.Gender;
+import com.sarac.enums.Status;
+import com.sarac.service.ProjectService;
 import com.sarac.service.RoleService;
 import com.sarac.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
-import java.util.List;
+import java.time.LocalDate;
 
 @Component
 public class DataGenerator implements CommandLineRunner {
 
     private final RoleService roleService;
     private final UserService userService;
+    private final ProjectService projectService;
 
-    public DataGenerator(RoleService roleService, UserService userService) {
+    public DataGenerator(RoleService roleService, UserService userService, ProjectService projectService) {
         this.roleService = roleService;
-
         this.userService = userService;
+        this.projectService = projectService;
     }
 
     //Run method will execute FIRST BEFORE ANYTHING when you start to application
@@ -59,6 +62,14 @@ public class DataGenerator implements CommandLineRunner {
         userService.save(user6);
         userService.save(user7);
         userService.save(user8);
+
+        ProjectDTO project1 = new ProjectDTO("Spring MVC", "PR001", user1, LocalDate.now(), LocalDate.now().plusDays(25), "Creating Controllers", Status.OPEN);
+        ProjectDTO project2 = new ProjectDTO("Spring ORM", "PR002", user2, LocalDate.now(), LocalDate.now().plusDays(10), "Creating Database", Status.IN_PROGRESS);
+        ProjectDTO project3 = new ProjectDTO("Spring Container", "PR003", user1, LocalDate.now(), LocalDate.now().plusDays(32), "Creating Container", Status.IN_PROGRESS);
+
+        projectService.save(project1);
+        projectService.save(project2);
+        projectService.save(project3);
 //        List<UserDTO>userDTOList= Arrays.asList(user1,user2,user3,user4,user5,user6,user7,user8);
 //        for (UserDTO user : userDTOList) {
 //            userService.save(user);

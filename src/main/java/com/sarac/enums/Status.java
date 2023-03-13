@@ -2,7 +2,7 @@ package com.sarac.enums;
 
 public enum Status {
 
-    OPEN("Open"),INPROGRES("In-progres"), COMPLETE("Completed");
+    OPEN("Open"),IN_PROGRESS("In-progres"), COMPLETE("Completed");
 
     private String value;
 

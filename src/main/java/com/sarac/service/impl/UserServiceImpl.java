@@ -4,6 +4,7 @@ import com.sarac.dto.UserDTO;
 import com.sarac.service.UserService;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl extends AbstractMapService<UserDTO,String> implements UserService {
@@ -31,5 +32,10 @@ public class UserServiceImpl extends AbstractMapService<UserDTO,String> implemen
     @Override
     public void update(UserDTO object) {
         super.update(object.getFirstName(),object);
+    }
+
+    @Override
+    public List<UserDTO> findManager() {
+        return findAll().stream().filter(userDTO -> userDTO.getRole().getId()==2).collect(Collectors.toList());
     }
 }
