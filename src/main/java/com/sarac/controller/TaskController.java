@@ -1,6 +1,7 @@
 package com.sarac.controller;
 
 import com.sarac.dto.TaskDTO;
+import com.sarac.enums.Status;
 import com.sarac.service.ProjectService;
 import com.sarac.service.TaskService;
 import com.sarac.service.UserService;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/task")
@@ -72,5 +72,35 @@ public class TaskController {
         taskService.update(taskDTO);
 
         return "redirect:/task/create";
+    }
+
+    @GetMapping("/employee/pending-tasks")
+    public String employeePendingTask(Model model){
+
+        model.addAttribute("tasks",taskService.findAllTaskByStatusIsNot(Status.COMPLETE));
+        return "/task/pending-tasks";
+    }
+    @GetMapping("/employee/archive")
+    public String employeeArchivedTasks(Model model){
+
+      model.addAttribute("tasks",taskService.findAllTaskByStatus(Status.COMPLETE));
+
+        return "/task/archive";
+    }
+    @GetMapping("/employee/edit/{id}")
+    public String employeestatusUpdate(@PathVariable Long id,Model model){
+
+        model.addAttribute("task",taskService.findById(id));
+//        model.addAttribute("projects",projectService.findAll());
+//        model.addAttribute("employees",userService.findEmployee());
+
+        model.addAttribute("statuses",Status.values());
+        model.addAttribute("tasks",taskService.findAllTaskByStatusIsNot(Status.COMPLETE));
+        return "/task/status-update";
+    }
+    @PostMapping("/employee/update/{id}")
+    public String employeeUpdateTask(TaskDTO task){
+        taskService.updateStatus(task);
+        return "redirect:/task/employee/pending-tasks";
     }
 }

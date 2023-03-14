@@ -1,11 +1,14 @@
 package com.sarac.controller;
 import com.sarac.dto.ProjectDTO;
+import com.sarac.dto.UserDTO;
 import com.sarac.enums.Status;
 import com.sarac.service.ProjectService;
 import com.sarac.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/project")
@@ -73,5 +76,17 @@ public class ProjectController {
        projectService.save(projectDTO);
 
         return "redirect:/project/create";
+    }
+
+    @GetMapping("/manager/status-update")
+    public String getProjectByManager(Model model){
+
+        UserDTO manager=userService.findById("john@cydeo.com");
+
+        List<ProjectDTO>projects=projectService.getCountedListOfProjectDTO(manager);
+
+        model.addAttribute("projects",projects);
+
+        return "manager/project-status";
     }
 }
