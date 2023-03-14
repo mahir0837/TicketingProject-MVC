@@ -1,11 +1,13 @@
 package com.sarac.boostrap;
 import com.sarac.dto.ProjectDTO;
 import com.sarac.dto.RoleDTO;
+import com.sarac.dto.TaskDTO;
 import com.sarac.dto.UserDTO;
 import com.sarac.enums.Gender;
 import com.sarac.enums.Status;
 import com.sarac.service.ProjectService;
 import com.sarac.service.RoleService;
+import com.sarac.service.TaskService;
 import com.sarac.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,11 +20,13 @@ public class DataGenerator implements CommandLineRunner {
     private final RoleService roleService;
     private final UserService userService;
     private final ProjectService projectService;
+    private final TaskService taskService;
 
-    public DataGenerator(RoleService roleService, UserService userService, ProjectService projectService) {
+    public DataGenerator(RoleService roleService, UserService userService, ProjectService projectService, TaskService taskService) {
         this.roleService = roleService;
         this.userService = userService;
         this.projectService = projectService;
+        this.taskService = taskService;
     }
 
     //Run method will execute FIRST BEFORE ANYTHING when you start to application
@@ -75,6 +79,15 @@ public class DataGenerator implements CommandLineRunner {
 //            userService.save(user);
 //        }
 
+        TaskDTO task1 = new TaskDTO(1L,project1, user8, "Controller", "Request Mapping", Status.IN_PROGRESS, LocalDate.now().minusDays(4));
+        TaskDTO task2 = new TaskDTO(2L,project3, user3, "Configuration", "Database Connection", Status.COMPLETE, LocalDate.now().minusDays(12));
+        TaskDTO task3 = new TaskDTO(3L,project3, user6, "Mapping", "One-To-Many", Status.COMPLETE, LocalDate.now().minusDays(8));
+        TaskDTO task4 = new TaskDTO(4L,project2, user7, "Dependency Injection", "Autowired", Status.IN_PROGRESS, LocalDate.now().minusDays(20));
+
+        taskService.save(task1);
+        taskService.save(task2);
+        taskService.save(task3);
+        taskService.save(task4);
 
     }
 }
