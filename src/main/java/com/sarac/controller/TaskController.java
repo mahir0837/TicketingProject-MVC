@@ -7,7 +7,10 @@ import com.sarac.service.TaskService;
 import com.sarac.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 
 @Controller
@@ -39,8 +42,16 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public String insertTask(@ModelAttribute("task") TaskDTO taskDTO){
+    public String insertTask(@Valid  @ModelAttribute("task") TaskDTO taskDTO, BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()) {
 
+            model.addAttribute("projects", projectService.findAll());
+            model.addAttribute("employees", userService.findEmployee());
+            model.addAttribute("tasks", taskService.findAll());
+
+            return "/task/create";
+
+        }
         taskService.save(taskDTO);
 
         return "redirect:/task/create";
@@ -67,8 +78,16 @@ public class TaskController {
         return "/task/update";
     }
     @PostMapping("/update/{id}")
-    public String updateTask(TaskDTO taskDTO){
+    public String updateTask(@Valid  TaskDTO taskDTO, BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()) {
 
+            model.addAttribute("projects", projectService.findAll());
+            model.addAttribute("employees", userService.findEmployee());
+            model.addAttribute("tasks", taskService.findAll());
+
+            return "/task/create";
+
+        }
         taskService.update(taskDTO);
 
         return "redirect:/task/create";
@@ -99,7 +118,18 @@ public class TaskController {
         return "/task/status-update";
     }
     @PostMapping("/employee/update/{id}")
-    public String employeeUpdateTask(TaskDTO task){
+    public String employeeUpdateTask(@Valid TaskDTO task,BindingResult bindingResult,Model model){
+
+        if (bindingResult.hasErrors()) {
+
+            model.addAttribute("statuses", Status.values());
+            model.addAttribute("tasks", taskService.findAllTaskByStatusIsNot(Status.COMPLETE));
+
+            return "/task/status-update";
+
+        }
+
+
         taskService.updateStatus(task);
         return "redirect:/task/employee/pending-tasks";
     }
