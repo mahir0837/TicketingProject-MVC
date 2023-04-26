@@ -2,6 +2,7 @@ package com.sarac.converter;
 import com.sarac.dto.RoleDTO;
 import com.sarac.service.RoleService;
 import org.springframework.boot.context.properties.ConfigurationPropertiesBinding;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -9,9 +10,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationPropertiesBinding
 public class RoleDtoConverter implements Converter<String, RoleDTO> {
 
-    RoleService roleService;
+    private final RoleService roleService;
 
-    public RoleDtoConverter(RoleService roleService) {
+    public RoleDtoConverter(@Lazy RoleService roleService) {
         this.roleService = roleService;
     }
 

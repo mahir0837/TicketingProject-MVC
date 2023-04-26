@@ -1,16 +1,18 @@
 package com.sarac.dto;
 
 import com.sarac.enums.Gender;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.*;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class UserDTO {
+
+    private Long id;
 
     @NotBlank
     @Size(max=15,min=2)

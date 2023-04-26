@@ -1,13 +1,17 @@
 package com.sarac.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
-    private Long id;
+@Entity
+@Table(name = "roles")
+public class Role extends BaseEntity {
+
     private String description;
 }

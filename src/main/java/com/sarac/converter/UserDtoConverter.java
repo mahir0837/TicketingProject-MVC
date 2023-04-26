@@ -1,7 +1,6 @@
 package com.sarac.converter;
 
 
-import com.sarac.dto.ProjectDTO;
 import com.sarac.dto.UserDTO;
 import com.sarac.service.UserService;
 import org.springframework.core.convert.converter.Converter;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserDtoConverter implements Converter<String,UserDTO> {
 
-    UserService userService;
+    private final UserService userService;
 
     public UserDtoConverter(UserService userService) {
         this.userService = userService;
@@ -18,6 +17,9 @@ public class UserDtoConverter implements Converter<String,UserDTO> {
 
     @Override
     public UserDTO convert(String source) {
-        return userService.findById(source);
+        if (source==null||source.equals("")){
+            return null;
+        }
+        return userService.findByUSerName(source);
     }
 }
