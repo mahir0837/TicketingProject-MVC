@@ -12,6 +12,7 @@ import com.sarac.mapper.TaskMapper;
 import com.sarac.mapper.UserMapper;
 import com.sarac.service.TaskService;
 import com.sarac.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -118,14 +119,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> listAllTaskByStatusIsNot(Status status) {
-        UserDTO loggedInUser=userService.findByUSerName("john@employee.com");
+        String userName= SecurityContextHolder.getContext().getAuthentication().getName();
+        UserDTO loggedInUser=userService.findByUSerName(userName);
         List<Task>tasks=taskRepository.findAllByTaskStatusIsNotAndAssignedEmployee(status,userMapper.convertToEntity(loggedInUser));
         return tasks.stream().map(taskMapper::convertToDto).collect(Collectors.toList());
     }
 
     @Override
     public List<TaskDTO> listAllTaskByStatus(Status status) {
-        UserDTO loggedInUser=userService.findByUSerName("john@employee.com");
+        String userName= SecurityContextHolder.getContext().getAuthentication().getName();
+        UserDTO loggedInUser=userService.findByUSerName(userName);
         List<Task>tasks=taskRepository.findAllByTaskStatusAndAssignedEmployee(status,userMapper.convertToEntity(loggedInUser));
         return tasks.stream().map(taskMapper::convertToDto).collect(Collectors.toList());
     }

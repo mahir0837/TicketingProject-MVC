@@ -11,6 +11,8 @@ import com.sarac.mapper.UserMapper;
 import com.sarac.service.ProjectService;
 import com.sarac.service.TaskService;
 import com.sarac.service.UserService;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +26,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final UserMapper userMapper;
     private final TaskService taskService;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectMapper projectMapper, UserService userService, UserMapper userMapper, TaskService taskService) {
+    public ProjectServiceImpl(ProjectRepository projectRepository, ProjectMapper projectMapper, @Lazy UserService userService, UserMapper userMapper, TaskService taskService) {
         this.projectRepository = projectRepository;
         this.projectMapper = projectMapper;
         this.userService = userService;
@@ -91,7 +93,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<ProjectDTO> listAllProjectDetails() {
-        UserDTO currentUserdto=userService.findByUSerName("harold@manager.com");
+
+        String userName= SecurityContextHolder.getContext().getAuthentication().getName();
+        UserDTO currentUserdto=userService.findByUSerName(userName);
 
         User user=userMapper.convertToEntity(currentUserdto);
 

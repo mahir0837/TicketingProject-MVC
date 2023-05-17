@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Where;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -25,7 +27,7 @@ public class User extends BaseEntity {
     private String passWord;
     private boolean enabled;
     private String phone;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Role role;
     @Enumerated(EnumType.STRING)
     private Gender gender;
