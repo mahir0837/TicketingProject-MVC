@@ -30,6 +30,10 @@ public class UserDTO {
     @Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,}")//smallletter,CapitalLetter,At list 4Character and SpecialCharacter and numbers
     private String passWord;
 
+    @NotBlank
+    @Pattern(regexp = "(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{4,}")
+    private String confirmPassWord;
+
     private boolean enabled;
 
     @NotBlank
