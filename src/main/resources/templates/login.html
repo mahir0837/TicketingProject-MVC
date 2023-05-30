@@ -28,6 +28,9 @@
                 </div>
                 <input type="submit" name="login-submit" id="login-submit"
                        class="form-control btn btn-primary btn-lg btn-block" value="Log In"/>
+                <div th:if="${param.error}"  class="alert alert-danger">
+                    Wrong username or password
+                </div>
             </form>
         </div>
     </div>
