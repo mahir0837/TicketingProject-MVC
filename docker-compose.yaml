@@ -1,17 +1,19 @@
-version: '3.7'
+version: "3.7"
 services:
   mypostgres:
     image: postgres
-    container_name: mypostgress
+    container_name: mypostgres
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "251210Nms."
-      POSTGRES_DB: "ticketing-app"
+      POSTGRES_DB: "TicketingProjectDb"
     ports:
       - "5432:5432"
     restart: always
     volumes:
       - initdb:/var/lib/postgresql/data
+    networks:
+      - webnet
   ticketing-app:
     build: .
     container_name: ticketingapp
